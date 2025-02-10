@@ -10,15 +10,15 @@ function convertToObject(sourceString) {
 
   convertString = convertString.map((item) => item.split(':'));
 
-  const objectConvert = {};
+  const filterString = convertString.filter(
+    (item) => item[0].trim().length > 0,
+  );
 
-  for (const [title, value] of convertString) {
-    if (title.trim() !== '') {
-      Object.assign(objectConvert, { [title.trim()]: value.trim() });
-    }
-  }
+  const objectConvert = filterString.map(([title, value]) => ({
+    [title.trim()]: value.trim(),
+  }));
 
-  return objectConvert;
+  return objectConvert.reduce((prev, item) => ({ ...prev, ...item }), {});
 }
 
 module.exports = convertToObject;
